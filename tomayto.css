@@ -1,0 +1,110 @@
+/*
+    Elise Saxon
+    CS342: Web Scripting
+    Due Nov 7, 2017
+
+    Tomayto/tomahto website: A site formatted based on Homework #3
+    specifications. Practice with PHP concepts.
+    This file styles the various pages of a movie review site and
+    corresponds to the data files specific to each movie.
+*/
+
+body {
+  background:
+    url("images/tomatobanner.png") repeat-x top,
+    url("images/tomatobanner.png") repeat-x bottom;
+  background-color: #ff9955;
+}
+
+h1 {
+  color: #ffffff;
+  text-indent: 25%;
+  text-shadow: 10px 10px 10px #000000;
+}
+
+#movie_title {
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 36pt;
+  color: #114400;
+  text-shadow: 4px 4px 4px #999999;
+  margin: 20px;
+}
+
+#main_block {
+  margin-right: auto;
+  margin-left: auto;
+  width: 800px;
+  border: 8px solid #999999;
+  border-radius: 20px;
+  overflow: auto;
+}
+
+#top_bar {
+  background-color: #114400;
+  color: #ff2211;
+  font-size: 64pt;
+  font-family: sans-serif;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+
+#right_bar {
+  background-color: #558822;
+  width: 250px;
+  float: right;
+  border-top-right-radius: 12px;
+}
+
+#right_bar p {
+  border-top-right-radius: 12px;
+  margin-top: 0px;
+}
+
+#right_bar dl {
+  font-family: sans-serif;
+  margin: 10px;
+}
+
+#reviews_col1 {
+  width: 275px;
+  float: left;
+}
+
+#reviews_col2 {
+  width: 275px;
+  display: inline-block;
+}
+
+.review {
+  width: 255px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.review > p:first-child {
+  background-color: #ffbb88;
+  border: 3px solid black;
+  border-radius: 10px;
+  overflow: auto;
+
+  font-family: sans-serif;
+  font-size: 8pt;
+  font-weight: bold;
+  padding: 5px;
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
+
+.review img {
+  float: left;
+}
+
+.review > p:first-child + p, .review > p:first-child + p + p {
+  font-style: italic;
+  text-align: right;
+  margin: 0px;
+}
