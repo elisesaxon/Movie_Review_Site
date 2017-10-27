@@ -14,6 +14,22 @@
   <title>Tomaytos/Tomahtos</title>
 </head>
 <body>
+  <select name="movie">
 
+  <?php
+    $movies = glob('moviefiles/*', GLOB_BRACE);
+    foreach($movies as $movie) {
+      $info = fopen($movie . "/info.txt", 'r');
+      $title = fgets($info);
+      fclose($info);
+
+      echo $title;
+      echo "<option value=".$title.">".$title."</option>";
+    }
+    ?>
+    <option name="movie"> </option>
+  </select>
+
+  <input type="submit" name="submitMovie" value="Select" />
 </body>
 </html>
