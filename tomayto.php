@@ -19,26 +19,31 @@
 <body>
 
   <?php
-    function printDropDown() {
-       echo "<select name=movie>";
-        $movies = glob("moviefiles/*", GLOB_BRACE);
-        foreach($movies as $movie) {
-          $info = fopen($movie . "/info.txt", 'r');
-          $title = fgets($info);
-          fclose($info);
-          echo "<option value=".$title.">".$title."</option>";
-        }
-        echo "<option name=movie> </option>";
-      echo "</select>";
-      echo "<input type=submit name=submitMovie value=Select />";
-    }
-
     function printTitle() {
-      $titlefile = fopen("moviefiles/mortalkombat/info.txt", 'r');
+      $titlefile = fopen($_POST["movie"]."/info.txt", 'r');
       $title = fgets($titlefile);
       $year = trim(fgets($titlefile));
       fclose($titlefile);
       echo "<p id=movie_title> $title ($year) </p>";
+    }
+
+    function printDropDown() {
+       echo "<form method=post action=tomayto.php>";
+       echo "<select name=movie>";
+       $movies = glob("moviefiles/*", GLOB_BRACE);
+       foreach($movies as $movie) {
+         $info = fopen($movie . "/info.txt", 'r');
+         $title = fgets($info);
+         fclose($info);
+         if(strcmp($title, "The Princess Bride") == 0) {
+           echo "<option value=".$movie." selected='selected'>".$title."</option>";
+         } else {
+           echo "<option value=".$movie.">".$title."</option>";
+         }
+       }
+       echo "<option name=movie> </option>";
+       echo "</select>";
+       echo "<input type=submit name=submitMovie value=Select />";
     }
 
     function printTopBar($avg) {
@@ -51,9 +56,10 @@
 
     function printOverview() {
       echo "<div id=right_bar>";
-      echo "<p> <img src=moviefiles/mortalkombat/overview.png alt=mortalkombat/> </p>";
+      $alt = str_replace("moviefiles/", "", $_POST["movie"]);
+      echo "<p> <img src=".$_POST["movie"]."/overview.png alt=$alt/> </p>";
       echo "<dl>";
-      $overviewfile = fopen("moviefiles/mortalkombat/overview.txt", 'r');
+      $overviewfile = fopen($_POST["movie"]."/overview.txt", 'r');
       while(($line = fgets($overviewfile)) !== false) {
         $linearray = explode(':', $line);
         echo "<dt>$linearray[0]:</dt>";
@@ -94,9 +100,10 @@
 
     echo "<div id=main_block>";
 
+
     printOverview();
 
-    $reviews = glob("moviefiles/mortalkombat/review*.txt", GLOB_BRACE);
+    $reviews = glob($_POST["movie"]."/review*.txt", GLOB_BRACE);
 
     $avg = 0;
     foreach($reviews as $review) {
