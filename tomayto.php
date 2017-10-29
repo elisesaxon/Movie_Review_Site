@@ -12,6 +12,7 @@
 <html>
 <head>
   <title>Tomaytos/Tomahtos</title>
+  <link rel='stylesheet' type='text/css' href='tomayto.css'/>; 
 </head>
 <body>
   <select name="movie">
