@@ -20,8 +20,8 @@
 
   <?php
     function printDropDown() {
-       /*echo <select name=movie>";
-        $movies = glob('moviefiles/*', GLOB_BRACE);
+       echo "<select name=movie>";
+        $movies = glob("moviefiles/*", GLOB_BRACE);
         foreach($movies as $movie) {
           $info = fopen($movie . "/info.txt", 'r');
           $title = fgets($info);
@@ -31,7 +31,6 @@
         echo "<option name=movie> </option>";
       echo "</select>";
       echo "<input type=submit name=submitMovie value=Select />";
-      */
     }
 
     function printTitle() {
