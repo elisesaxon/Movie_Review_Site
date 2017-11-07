@@ -8,7 +8,8 @@
   This file reads in data from various movie data files and is
   styled by tomayto.css.
 
-  To run in browser: http://192.168.64.2/Movie_Review_Site/tomayto.php
+  To run in browser on my local mac server:
+  http://192.168.64.2/Movie_Review_Site/tomayto.php
 -->
 
 <html>
@@ -27,7 +28,6 @@
     } ?>
 
 
-
     <?php function printTopBar($avg) { ?>
       <p id=top_bar>
       <img src=images/tomato.png alt=tomato />
@@ -37,6 +37,7 @@
       ?>
       </p>
     <?php } ?>
+
 
     <?php function printDropDown() { ?>
        <form method=post action=tomayto.php>
@@ -58,6 +59,7 @@
        <input type=submit value=Select />
     <?php } ?>
 
+
     <?php function printOverview() { ?>
       <div id=right_bar>
       <?php
@@ -77,6 +79,7 @@
       </dl>
       </div>
     <?php } ?>
+
 
     <?php function printCol($colnum, $colstart, $colend, $reviews) {
         echo "<div id=reviews_col" . $colnum . ">";
@@ -112,13 +115,13 @@
       printOverview();
 
       $reviews = glob($_POST["movie"]."/review*.txt", GLOB_BRACE);
-
       $avg = 0;
       foreach($reviews as $review) {
         $reviewarray = file($review);
         $avg = $avg + (int)$reviewarray[1];
       }
       $avg = $avg / sizeof($reviews);
+
       printTopBar(round($avg, 1));
 
       $maxcol = ceil(sizeof($reviews)/2);
