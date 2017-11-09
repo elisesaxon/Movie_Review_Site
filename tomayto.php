@@ -8,8 +8,7 @@
   This file reads in data from various movie data files and is
   styled by tomayto.css.
 
-  To run in browser on my local mac server:
-  http://192.168.64.2/Movie_Review_Site/tomayto.php
+  To run in browser: http://192.168.64.2/Movie_Review_Site/tomayto.php
 -->
 
 <html>
@@ -23,23 +22,23 @@
       $titlefile = fopen($_POST["movie"]."/info.txt", 'r');
       $title = fgets($titlefile);
       $year = trim(fgets($titlefile));
-      fclose($titlefile);
-      echo "<p id=movie_title> $title ($year) </p>";
-    } ?>
+      fclose($titlefile); ?>
+      <p id=movie_title> <?= $title ?> ( <?=$year?>) </p>
+  <?php } ?>
+
 
 
     <?php function printTopBar($avg) { ?>
-      <p id=top_bar>
-      <img src=images/tomato.png alt=tomato />
-      <?php
-        echo "$avg";
-        printDropDown();
-      ?>
-      </p>
+      <div id=top_bar>
+      <inline> <img src=images/tomato.png alt=tomato />
+      <?= $avg ?>
+      <?php printDropDown();?>
+      </inline>
+      </div>
     <?php } ?>
 
-
     <?php function printDropDown() { ?>
+       <inline id="dropdown">
        <form method=post action=tomayto.php>
        <select name=movie>
        <?php
@@ -48,42 +47,40 @@
            $info = fopen($movie . "/info.txt", 'r');
            $title = fgets($info);
            fclose($info);
-           if(strcmp($movie, "moviefiles/princessbride") == 0) {
-             echo "<option value=$movie selected>$title</option>";
-           } else {
-             echo "<option value=$movie>$title</option>";
-           }
+           if(strcmp($movie, "moviefiles/princessbride") == 0) { ?>
+             <option value= <?=$movie?> selected> <?=$title ?> </option>
+           <?php } else { ?>
+             <option value= <?=$movie?> > <?=$title?> </option>
+           <?php }
          }
        ?>
        </select>
        <input type=submit value=Select />
+       </inline>
     <?php } ?>
-
 
     <?php function printOverview() { ?>
       <div id=right_bar>
       <?php
-        $alt = str_replace("moviefiles/", "", $_POST["movie"]);
-        echo "<p> <img src=".$_POST["movie"]."/overview.png alt=$alt/> </p>";
-      ?>
+        $alt = str_replace("moviefiles/", "", $_POST["movie"]); ?>
+        <p> <img src= <?= $_POST["movie"] . "/overview.png" ?> alt= <?=$alt?> width=250 height=412 /> </p>
       <dl>
       <?php
         $overviewfile = fopen($_POST["movie"]."/overview.txt", 'r');
         while(($line = fgets($overviewfile)) !== false) {
-          $linearray = explode(':', $line);
-          echo "<dt>$linearray[0]:</dt>";
-          echo "<dd>$linearray[1]</dd>";
-        }
+          $linearray = explode(':', $line); ?>
+          <dt> <?=$linearray[0]?>: </dt>
+          <dd> <?=$linearray[1]?> </dd>
+        <?php }
         fclose($overviewfile);
       ?>
       </dl>
       </div>
     <?php } ?>
 
-
-    <?php function printCol($colnum, $colstart, $colend, $reviews) {
-        echo "<div id=reviews_col" . $colnum . ">";
-        for($i = $colstart; $i < $colend; $i++) {
+    <?php function printCol($colnum, $colstart, $colend, $reviews) { ?>
+        <div id= <?= "reviews_col" . $colnum ?>>
+        <?php for($i = $colstart; $i < $colend; $i++) {
           $reviewfile = fopen($reviews[$i], 'r');
           $reviewtext = fgets($reviewfile);
           $tomatos = fgets($reviewfile);
@@ -95,16 +92,21 @@
           <p>
           <?php for($j = 0; $j < $tomatos; $j++) { ?>
             <img src=images/tomatosmall.png alt=tomatosmall/>
-          <?php }
-          echo "$reviewtext </p>";
-          echo "<p>$reviewer</p>";
-          echo "<p>$reviewerfrom</p>"; ?>
+          <?php } ?>
+          <?= $reviewtext ?> 
+          </p>
+          <p> <?= $reviewer ?> </p>
+          <p> <?= $reviewerfrom ?> </p>
           </div>
         <?php } ?>
       </div>
     <?php } ?>
-
-
+	
+	
+	<?php if(!isset($_POST["movie"])) {
+		$_POST["movie"] = "moviefiles/princessbride";
+	} ?>
+	
     <h1>Tomayto/Tomahto</h1>
 
     <?php printTitle(); ?>
@@ -115,13 +117,13 @@
       printOverview();
 
       $reviews = glob($_POST["movie"]."/review*.txt", GLOB_BRACE);
+
       $avg = 0;
       foreach($reviews as $review) {
         $reviewarray = file($review);
         $avg = $avg + (int)$reviewarray[1];
       }
       $avg = $avg / sizeof($reviews);
-
       printTopBar(round($avg, 1));
 
       $maxcol = ceil(sizeof($reviews)/2);

@@ -52,6 +52,17 @@ h1 {
   border-top-left-radius: 12px;
 }
 
+select {
+    background-color: #558822;
+}
+
+#dropdown {
+	padding-right: 30px;
+	float: right;
+	height: 100px;
+	overflow: hidden;
+}
+
 #right_bar {
   background-color: #558822;
   width: 250px;
